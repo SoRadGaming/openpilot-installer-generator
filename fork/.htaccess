@@ -1,11 +1,11 @@
-# KeepAlive Off
-RewriteEngine on
-RewriteCond %{HTTPS} off
-RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+# HTTPS is terminated upstream at nginx — do NOT force-redirect here.
+# Apache behind a reverse proxy always sees HTTPS=off on the internal
+# connection, so the original upstream rule here caused an infinite
+# redirect loop in this deployment. Confirmed by testing before shipping.
 
 Header always set Content-Security-Policy: upgrade-insecure-requests
 
-# RewriteEngine on
+RewriteEngine on
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^(.*)$ /fork/index.php?url=$1
