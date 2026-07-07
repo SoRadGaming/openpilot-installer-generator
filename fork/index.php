@@ -1,5 +1,5 @@
 <?php
-error_reporting(E_ALL ^ E_WARNING);
+error_reporting(E_ALL ^ E_WARNING ^ E_DEPRECATED);
 
 # Constants
 define("USER_AGENT", $_SERVER['HTTP_USER_AGENT']);
@@ -9,7 +9,7 @@ define("IS_WGET", str_contains(USER_AGENT, "Wget"));
 # Use release2 if NEOS, else release3 (careful! wget assumes comma three)
 define("DEFAULT_STOCK_BRANCH", IS_NEOS ? "release2" : "release3");
 
-define("WEBSITE_URL", "https://smiskol.com");
+define("WEBSITE_URL", "https://install.soradgaming.com");
 define("BASE_DIR", "/" . basename(__DIR__));
 
 function logData() {
@@ -21,7 +21,7 @@ function logData() {
     $data = array("IP" => $_SERVER['REMOTE_ADDR'], "url" => $url, "username" => $username, "branch" => $branch, "is_neos" => IS_NEOS, "is_agnos" => IS_AGNOS, "is_wget" => IS_WGET, "user_agent" => USER_AGENT, "date" => date("Y-m-d_H:i:s",time()));
     $data = json_encode($data);
 
-    $fp = fopen("log.txt", "a");
+    $fp = fopen("log/log.txt", "a");
     fwrite($fp, $data."\n");
     fclose($fp);
 }
