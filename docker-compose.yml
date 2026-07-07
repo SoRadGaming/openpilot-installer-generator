@@ -1,0 +1,15 @@
+services:
+  openpilot-installer:
+    build: .
+    image: ghcr.io/soradgaming/openpilot-installer:latest
+    container_name: openpilot-installer
+    restart: unless-stopped
+    read_only: true
+    tmpfs:
+      - /tmp
+      - /var/run
+      - /var/lock
+    volumes:
+      - ./log:/var/www/html/fork/log:rw
+    ports:
+      - "8091:80"
